@@ -3,6 +3,7 @@ public class Mesa {
     private boolean ocupada;
     private Orden orden;
 
+    //Se crea una mesa que tiene su propia orden y su numero de mesa
     public Mesa(int numeroMesa) {
         this.numeroMesa = numeroMesa;
         this.ocupada = false;

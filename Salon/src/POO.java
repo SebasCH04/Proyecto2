@@ -1,4 +1,6 @@
 public class POO extends Hamburguesa {
+        
+        //Se utiliza polimorfismo para crear esta hamburguesa POO
         public POO() {
             super("POO", 3000);
         }

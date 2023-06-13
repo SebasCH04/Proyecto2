@@ -6,6 +6,7 @@ public class Orden {
     private List<Hamburguesa> hamburguesasPedidas;
     private boolean estado;
     
+    //Se crea una orden que recibe el numero de mesa de la que se ordeno
     public Orden(int numMesa) {
         this.numMesa = numMesa;
         this.hamburguesasPedidas = new ArrayList<>();
@@ -20,6 +21,7 @@ public class Orden {
         this.estado = true; //Se actaliza para saber que ya esta lista
     }
 
+    //Formula para calcular el precio total de la orden 
     public int calcularPrecioTotal() {
         int precioTotal = 0;
 

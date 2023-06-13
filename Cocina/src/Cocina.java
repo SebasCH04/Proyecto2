@@ -12,6 +12,8 @@ public class Cocina extends JFrame implements Runnable {
     private JTextArea ordenesPendientesList;
     private JButton ordenListaButton;
 
+    //El patron de Facade fue usado para proporcionar una interfaz simplificada ya que es mucho mas de lo que se muestra,
+    //por debajo hay muchas clases y funciones que no se ven en la interfaz
     public Cocina() {
         super("Cocina de Sebas & Angelo");
         
@@ -43,6 +45,7 @@ public class Cocina extends JFrame implements Runnable {
 
     private void marcarOrdenLista() {
         
+        //Se crea un socket para enviar la notificacion de que la orden ya esta lista, se utiliza el patron de Cliente/Servidor
         try{
             Socket socketParaSalon = new Socket("127.0.0.1",9999);
             DataOutputStream enviarNotificacion = new DataOutputStream(socketParaSalon.getOutputStream());
@@ -61,6 +64,9 @@ public class Cocina extends JFrame implements Runnable {
 
     @Override
     public void run() {
+        
+        //Se crea otro socket recibir la informacion de las ordenes, se usa el patron Publisher/Subscriber, 
+        //asi este puede mandar y recibir notificaciones de cuando ya este lista la orden
         try{
 
             ServerSocket servidorCocina = new ServerSocket(1111);
@@ -79,6 +85,7 @@ public class Cocina extends JFrame implements Runnable {
 
     }
 
+    //Aqui se ejecuta el modulo de Cocina
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

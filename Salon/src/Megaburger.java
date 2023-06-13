@@ -1,4 +1,6 @@
 public class Megaburger extends Hamburguesa {
+    
+    //Se utiliza polimorfismo para crear esta hamburguesa Megaburger
     public Megaburger() {
         super("Megaburger", 2500);
     }

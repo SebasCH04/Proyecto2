@@ -6,6 +6,7 @@ public class Hamburguesa {
     private List<String> ingredientes;
     public int precio;
 
+    //Se utiliza polimorfismo para crear los 3 tipos de hamburguesas POO, Megaburger y Sencilla
     public Hamburguesa(String nombre, int precio) {
         this.nombre = nombre;
         this.ingredientes = new ArrayList<>();

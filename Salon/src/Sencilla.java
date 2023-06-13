@@ -1,6 +1,8 @@
 public class Sencilla extends Hamburguesa {
+    
+    //Se utiliza polimorfismo para crear esta hamburguesa Sencilla
     public Sencilla() {
-        super("HamburguesaSencilla", 1500);
+        super("Hamburguesa Sencilla", 1500);
     }
 
     @Override

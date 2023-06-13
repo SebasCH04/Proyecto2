@@ -21,6 +21,8 @@ public class Salon extends JFrame implements Runnable {
     private JButton calcularButton;
     private JButton desocuparButton;
 
+    //El patron de Facade fue usado para proporcionar una interfaz simplificada ya que es mucho mas de lo que se muestra,
+    //por debajo hay muchas clases y funciones que no se ven en la interfaz
     public Salon() {
         super("Restaurante de Sebas & Angelo");
 
@@ -28,7 +30,7 @@ public class Salon extends JFrame implements Runnable {
         Thread hilo = new Thread(this);
         hilo.start();
 
-        //Inicializa las mesas
+        //Inicializa las mesas (se pude modificar el numero de mesas que se desea tener en el restaurante)
         mesas = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
             Mesa mesa = new Mesa(i);
@@ -92,6 +94,7 @@ public class Salon extends JFrame implements Runnable {
         });
     }
 
+    //Se ocupa la mesa si no hay nadie en ella, si hay alguien no se puede
     private void ocuparMesa() {
         int numeroMesa = mesaComboBox.getSelectedIndex();
 
@@ -139,6 +142,7 @@ public class Salon extends JFrame implements Runnable {
                     "Agregar Hamburguesa", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                     new String[]{"POO (3000\u20A1): Pollo, Carne, Jamón, Queso, Cebolla y Salsas", "Megaburger (2500\u20A1): Carne, Jamón, Queso, y Salsas", "Sencilla (1500\u20A1): Carne"}, null);
 
+            //Se escogen las hamburguesas que se desean y se crean nuevas instancias de ellas
             if (opcion >= 0 && opcion <= 2) {
                 Hamburguesa hamburguesa;
                 switch (opcion) {
@@ -159,6 +163,8 @@ public class Salon extends JFrame implements Runnable {
                 if (hamburguesa != null) {
                     agregarIngredientes(hamburguesa);
                     mesaSeleccionada.getOrden().agregarHamburguesa(hamburguesa);
+                    
+                    //Se crea un socket para enviar los datos de las hamburguesas que se pidieron y se envia el numero de mesa, se utiliza Cliente/Servidor
                     try{
                         Socket socketParaCocina = new Socket("127.0.0.1",1111);
                         DataOutputStream enviarOrden = new DataOutputStream(socketParaCocina.getOutputStream());
@@ -188,6 +194,8 @@ public class Salon extends JFrame implements Runnable {
                     new String[]{"Agregar ingrediente", "Finalizar"}, null);
 
             switch (opcion) {
+                
+                //Se pueden agregar cualquier tipo de ingredientes que se deseen pero cuestan 500 cada uno
                 case 0:
                     ingrediente = JOptionPane.showInputDialog(Salon.this, "Ingrese el nombre del ingrediente que desea agregar (500\u20A1 c/u):");
 
@@ -234,6 +242,9 @@ public class Salon extends JFrame implements Runnable {
 
     @Override
     public void run() {
+        
+        //Se crea otro socket recibir la informacion de cuando este lista la orden, se usa el patron Publisher/Subscriber, 
+        //asi este puede mandar y recibir notificaciones de cuando ya este lista la orden
         try{
 
             ServerSocket servidorSalon = new ServerSocket(9999);
@@ -252,6 +263,7 @@ public class Salon extends JFrame implements Runnable {
 
     }
 
+    //Aqui se ejecuta el modulo de Salon
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
